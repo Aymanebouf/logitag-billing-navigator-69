@@ -5,7 +5,7 @@ import {
   LayoutDashboard,
   FileText,
   FileStack,
-  Inventory,
+  Package,
   ChartBar,
   Settings
 } from "lucide-react";
@@ -66,7 +66,7 @@ export function Navigation() {
         hasSubmenu
       />
       <NavItem
-        icon={<Inventory size={20} />}
+        icon={<Package size={20} />}
         label="Inventory"
         path="/inventory"
         isActive={currentPath === "/inventory"}
