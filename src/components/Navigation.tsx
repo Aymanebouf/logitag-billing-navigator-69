@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -94,27 +93,27 @@ export function Navigation() {
   const factureClientSubmenu = [
     {
       icon: <Calendar size={20} />,
-      label: "A Facturer",
+      label: "Génération factures",
       path: "/factures-client/a-facturer",
     },
     {
       icon: <FileText size={20} />,
-      label: "Factures",
+      label: "Gestion factures",
       path: "/factures-client/factures",
     },
     {
       icon: <Archive size={20} />,
-      label: "Archive",
+      label: "Documents archivés",
       path: "/factures-client/archive",
     },
     {
       icon: <CheckSquare size={20} />,
-      label: "Validation",
+      label: "Validation documents",
       path: "/factures-client/validation",
     },
     {
       icon: <Settings2 size={20} />,
-      label: "Paramètres",
+      label: "Configuration",
       path: "/factures-client/parametres",
     },
   ];
