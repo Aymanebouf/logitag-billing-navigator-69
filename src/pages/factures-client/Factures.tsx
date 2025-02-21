@@ -16,8 +16,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { FileText, Download, Plus } from "lucide-react";
+import { useState } from "react";
 
 const Factures = () => {
+  const [isExportOpen, setIsExportOpen] = useState(false);
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -37,8 +56,77 @@ const Factures = () => {
           <CardContent>
             <div className="flex justify-between items-center mb-6">
               <div className="flex gap-4">
-                <Button variant="default">Nouvelle Facture</Button>
-                <Button variant="outline">Exporter</Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="default">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Nouvelle Facture
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Créer une nouvelle facture</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="client">Client</Label>
+                        <Input id="client" placeholder="Nom du client" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="date">Date de facturation</Label>
+                        <Input id="date" type="date" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="amount">Montant (€)</Label>
+                        <Input id="amount" type="number" placeholder="0.00" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="description">Description</Label>
+                        <Input id="description" placeholder="Description de la facture" />
+                      </div>
+                      <Button type="submit" className="w-full">
+                        Créer la facture
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={isExportOpen} onOpenChange={setIsExportOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      <Download className="w-4 h-4 mr-2" />
+                      Exporter
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Exporter la facture</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="invoice-number">Numéro de facture</Label>
+                        <Input id="invoice-number" placeholder="FAC-2024-XXX" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="format">Format d'export</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choisir un format" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pdf">PDF</SelectItem>
+                            <SelectItem value="excel">Excel</SelectItem>
+                            <SelectItem value="csv">CSV</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <Button className="w-full">
+                        <Download className="w-4 h-4 mr-2" />
+                        Télécharger
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <div className="w-64">
                 <Input placeholder="Rechercher une facture..." />
