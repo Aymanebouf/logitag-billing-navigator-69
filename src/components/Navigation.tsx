@@ -94,17 +94,17 @@ export function Navigation() {
   const factureClientSubmenu = [
     {
       icon: <Calendar size={20} />,
-      label: "AFacturer",
+      label: "A Facturer",
       path: "/factures-client/a-facturer",
     },
     {
       icon: <FileText size={20} />,
-      label: "Facture",
+      label: "Factures",
       path: "/factures-client/factures",
     },
     {
       icon: <Archive size={20} />,
-      label: "Archiver",
+      label: "Archive",
       path: "/factures-client/archive",
     },
     {
@@ -114,7 +114,7 @@ export function Navigation() {
     },
     {
       icon: <Settings2 size={20} />,
-      label: "Parametre",
+      label: "Paramètres",
       path: "/factures-client/parametres",
     },
   ];
@@ -126,13 +126,11 @@ export function Navigation() {
         label="Dashboard"
         path="/"
         isActive={currentPath === "/"}
-        hasSubmenu
-        isSubmenuOpen={openSubmenu === "dashboard"}
-        onToggleSubmenu={() => setOpenSubmenu(openSubmenu === "dashboard" ? null : "dashboard")}
+        hasSubmenu={false}
       />
       <NavItem
         icon={<FileText size={20} />}
-        label="FactureClient"
+        label="Factures Client"
         path="/factures-client"
         isActive={currentPath.startsWith("/factures-client")}
         hasSubmenu
@@ -142,10 +140,10 @@ export function Navigation() {
       />
       <NavItem
         icon={<FileStack size={20} />}
-        label="FactureFournisseur"
+        label="Factures Fournisseur"
         path="/factures-fournisseur"
         isActive={currentPath === "/factures-fournisseur"}
-        hasSubmenu
+        hasSubmenu={false}
       />
       <NavItem
         icon={<Package size={20} />}
@@ -161,11 +159,11 @@ export function Navigation() {
       />
       <NavItem
         icon={<Settings size={20} />}
-        label="Paramettres"
+        label="Paramètres"
         path="/parametres"
         isActive={currentPath === "/parametres"}
-        hasSubmenu
+        hasSubmenu={false}
       />
     </nav>
   );
-}
+};
