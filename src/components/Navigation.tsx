@@ -1,7 +1,14 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, FileText, Truck } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  FileStack,
+  Inventory,
+  ChartBar,
+  Settings
+} from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface NavItemProps {
@@ -9,9 +16,10 @@ interface NavItemProps {
   label: string;
   path: string;
   isActive: boolean;
+  hasSubmenu?: boolean;
 }
 
-const NavItem = ({ icon, label, path, isActive }: NavItemProps) => {
+const NavItem = ({ icon, label, path, isActive, hasSubmenu = false }: NavItemProps) => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +27,8 @@ const NavItem = ({ icon, label, path, isActive }: NavItemProps) => {
       variant="ghost"
       className={cn(
         "w-full justify-start gap-2 transition-all",
-        isActive && "bg-accent text-accent-foreground"
+        isActive && "bg-accent text-accent-foreground",
+        hasSubmenu && "after:content-['>'] after:ml-auto"
       )}
       onClick={() => navigate(path)}
     >
@@ -37,27 +46,43 @@ export function Navigation() {
     <nav className="space-y-2 p-4">
       <NavItem
         icon={<LayoutDashboard size={20} />}
-        label="Tableau de bord"
+        label="Dashboard"
         path="/"
         isActive={currentPath === "/"}
-      />
-      <NavItem
-        icon={<Users size={20} />}
-        label="Clients"
-        path="/clients"
-        isActive={currentPath === "/clients"}
-      />
-      <NavItem
-        icon={<Truck size={20} />}
-        label="Prestations"
-        path="/prestations"
-        isActive={currentPath === "/prestations"}
+        hasSubmenu
       />
       <NavItem
         icon={<FileText size={20} />}
-        label="Factures"
-        path="/invoices"
-        isActive={currentPath === "/invoices"}
+        label="FactureClient"
+        path="/factures-client"
+        isActive={currentPath === "/factures-client"}
+        hasSubmenu
+      />
+      <NavItem
+        icon={<FileStack size={20} />}
+        label="FactureFournisseur"
+        path="/factures-fournisseur"
+        isActive={currentPath === "/factures-fournisseur"}
+        hasSubmenu
+      />
+      <NavItem
+        icon={<Inventory size={20} />}
+        label="Inventory"
+        path="/inventory"
+        isActive={currentPath === "/inventory"}
+      />
+      <NavItem
+        icon={<ChartBar size={20} />}
+        label="Rapports"
+        path="/rapports"
+        isActive={currentPath === "/rapports"}
+      />
+      <NavItem
+        icon={<Settings size={20} />}
+        label="Paramettres"
+        path="/parametres"
+        isActive={currentPath === "/parametres"}
+        hasSubmenu
       />
     </nav>
   );
