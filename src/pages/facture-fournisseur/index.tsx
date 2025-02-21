@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Upload } from "lucide-react";
+import { Plus, Upload, FileText } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -17,6 +17,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const FactureFournisseur = () => {
   return (
@@ -38,14 +53,86 @@ const FactureFournisseur = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button className="w-full">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Nouvelle facture
-                </Button>
-                <Button variant="outline" className="w-full">
-                  <Upload className="w-4 h-4 mr-2" />
-                  Importer des factures
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-full">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Nouvelle facture
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Ajouter une facture fournisseur</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="supplier">Fournisseur</Label>
+                        <Input id="supplier" placeholder="Nom du fournisseur" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="invoice-number">N° Facture</Label>
+                        <Input id="invoice-number" placeholder="FOUR-2024-XXX" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="date">Date de facturation</Label>
+                        <Input id="date" type="date" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="amount">Montant HT (€)</Label>
+                        <Input id="amount" type="number" placeholder="0.00" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="tva">TVA (%)</Label>
+                        <Input id="tva" type="number" placeholder="20" />
+                      </div>
+                      <Button type="submit" className="w-full">
+                        <FileText className="w-4 h-4 mr-2" />
+                        Créer la facture
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                      <Upload className="w-4 h-4 mr-2" />
+                      Importer des factures
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Importer des factures</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="file-name">Nom du fichier</Label>
+                        <Input id="file-name" placeholder="Nom du fichier à importer" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="format">Format du fichier</Label>
+                        <Select>
+                          <SelectTrigger id="format">
+                            <SelectValue placeholder="Sélectionner un format" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pdf">PDF</SelectItem>
+                            <SelectItem value="excel">Excel</SelectItem>
+                            <SelectItem value="csv">CSV</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="file">Fichier</Label>
+                        <Input id="file" type="file" />
+                      </div>
+                      <Button type="submit" className="w-full">
+                        <Upload className="w-4 h-4 mr-2" />
+                        Importer
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </CardContent>
           </Card>
