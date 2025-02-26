@@ -11,6 +11,7 @@ import Factures from "./pages/factures-client/Factures";
 import Archive from "./pages/factures-client/Archive";
 import Validation from "./pages/factures-client/Validation";
 import Parametres from "./pages/factures-client/Parametres";
+import FacturePermanente from "./pages/factures-client/FacturePermanente";
 import FactureFournisseur from "./pages/facture-fournisseur";
 import Inventory from "./pages/inventory";
 import Rapports from "./pages/rapports";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/factures-client/a-facturer" element={<AFacturer />} />
           <Route path="/factures-client/factures" element={<Factures />} />
+          <Route path="/factures-client/permanentes" element={<FacturePermanente />} />
           <Route path="/factures-client/archive" element={<Archive />} />
           <Route path="/factures-client/validation" element={<Validation />} />
           <Route path="/factures-client/parametres" element={<Parametres />} />

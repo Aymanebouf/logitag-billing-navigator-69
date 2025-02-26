@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -10,7 +11,8 @@ import {
   Calendar,
   Archive,
   CheckSquare,
-  Settings2
+  Settings2,
+  Repeat
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -102,6 +104,11 @@ export function Navigation() {
       path: "/factures-client/factures",
     },
     {
+      icon: <Repeat size={20} />,
+      label: "Factures permanentes",
+      path: "/factures-client/permanentes",
+    },
+    {
       icon: <Archive size={20} />,
       label: "Documents archivés",
       path: "/factures-client/archive",
@@ -165,4 +172,4 @@ export function Navigation() {
       />
     </nav>
   );
-};
+}
