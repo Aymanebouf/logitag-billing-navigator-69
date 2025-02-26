@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Layout } from "@/components/Layout";
@@ -37,18 +36,29 @@ import { Plus, FileText, Calendar, Eye, ExternalLink } from "lucide-react";
 
 const FacturePermanente = () => {
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
+  const [selectedFacture, setSelectedFacture] = useState<any>(null);
 
   const facturesLiees = [
-    { id: 1, numero: "F2024-001", date: "01/01/2024", montant: "500 €", statut: "Payée" },
-    { id: 2, numero: "F2024-002", date: "01/02/2024", montant: "500 €", statut: "Payée" },
-    { id: 3, numero: "F2024-003", date: "01/03/2024", montant: "500 €", statut: "En attente" },
-    { id: 4, numero: "F2024-004", date: "01/04/2024", montant: "500 €", statut: "En attente" },
-    { id: 5, numero: "F2024-005", date: "01/05/2024", montant: "500 €", statut: "À générer" },
-    { id: 6, numero: "F2024-006", date: "01/06/2024", montant: "500 €", statut: "À générer" },
-    { id: 7, numero: "F2024-007", date: "01/07/2024", montant: "500 €", statut: "À générer" },
-    { id: 8, numero: "F2024-008", date: "01/08/2024", montant: "500 €", statut: "À générer" },
-    { id: 9, numero: "F2024-009", date: "01/09/2024", montant: "500 €", statut: "À générer" },
-    { id: 10, numero: "F2024-010", date: "01/10/2024", montant: "500 €", statut: "À générer" },
+    { id: 1, numero: "F2024-001", date: "01/01/2024", montant: "500 €", statut: "Payée", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Janvier 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 2, numero: "F2024-002", date: "01/02/2024", montant: "500 €", statut: "Payée", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Février 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 3, numero: "F2024-003", date: "01/03/2024", montant: "500 €", statut: "En attente", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Mars 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 4, numero: "F2024-004", date: "01/04/2024", montant: "500 €", statut: "En attente", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Avril 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 5, numero: "F2024-005", date: "01/05/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Mai 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 6, numero: "F2024-006", date: "01/06/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Juin 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 7, numero: "F2024-007", date: "01/07/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Juillet 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 8, numero: "F2024-008", date: "01/08/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Août 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 9, numero: "F2024-009", date: "01/09/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Septembre 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 10, numero: "F2024-010", date: "01/10/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Octobre 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+  ];
+
+  const clientsList = [
+    { nom: "Client A", description: "Maintenance mensuelle", periodicite: "1 mois", prochaine: "01/04/2024", fin: "-", statut: "Actif" },
+    { nom: "Client B", description: "Location matériel", periodicite: "3 mois", prochaine: "15/04/2024", fin: "31/12/2024", statut: "Actif" },
+    { nom: "Client C", description: "Support technique", periodicite: "15 jours", prochaine: "01/04/2024", fin: "-", statut: "Actif" },
+    { nom: "Client D", description: "Hébergement web", periodicite: "1 an", prochaine: "01/01/2025", fin: "-", statut: "Actif" },
+    { nom: "Client E", description: "Maintenance serveurs", periodicite: "1 mois", prochaine: "05/04/2024", fin: "31/12/2024", statut: "Actif" },
+    { nom: "Client F", description: "Consulting", periodicite: "6 mois", prochaine: "30/06/2024", fin: "-", statut: "Actif" },
+    { nom: "Client G", description: "Formation", periodicite: "3 mois", prochaine: "15/05/2024", fin: "31/12/2024", statut: "Actif" }
   ];
 
   return (
@@ -153,79 +163,125 @@ const FacturePermanente = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell>Client A</TableCell>
-                  <TableCell>Maintenance mensuelle</TableCell>
-                  <TableCell>1 mois</TableCell>
-                  <TableCell>01/04/2024</TableCell>
-                  <TableCell>-</TableCell>
-                  <TableCell>
-                    <span className="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">
-                      Actif
-                    </span>
-                  </TableCell>
-                  <TableCell className="space-x-2">
-                    <Button variant="ghost" size="sm">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      Générer
-                    </Button>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedClient("Client A")}>
-                          <Eye className="w-4 h-4 mr-2" />
-                          Voir
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[800px]">
-                        <DialogHeader>
-                          <DialogTitle>Factures liées - Client A</DialogTitle>
-                        </DialogHeader>
-                        <div className="mt-4">
-                          <Table>
-                            <TableHeader>
-                              <TableRow>
-                                <TableHead>Numéro</TableHead>
-                                <TableHead>Date</TableHead>
-                                <TableHead>Montant</TableHead>
-                                <TableHead>Statut</TableHead>
-                                <TableHead>Actions</TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              {facturesLiees.map((facture) => (
-                                <TableRow key={facture.id}>
-                                  <TableCell>{facture.numero}</TableCell>
-                                  <TableCell>{facture.date}</TableCell>
-                                  <TableCell>{facture.montant}</TableCell>
-                                  <TableCell>
-                                    <span
-                                      className={cn(
-                                        "px-2 py-1 rounded-full text-xs font-medium",
-                                        {
-                                          "bg-green-100 text-green-800": facture.statut === "Payée",
-                                          "bg-yellow-100 text-yellow-800": facture.statut === "En attente",
-                                          "bg-blue-100 text-blue-800": facture.statut === "À générer",
-                                        }
-                                      )}
-                                    >
-                                      {facture.statut}
-                                    </span>
-                                  </TableCell>
-                                  <TableCell>
-                                    <Button variant="ghost" size="sm">
-                                      <ExternalLink className="w-4 h-4 mr-2" />
-                                      Détails
-                                    </Button>
-                                  </TableCell>
+                {clientsList.map((client, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{client.nom}</TableCell>
+                    <TableCell>{client.description}</TableCell>
+                    <TableCell>{client.periodicite}</TableCell>
+                    <TableCell>{client.prochaine}</TableCell>
+                    <TableCell>{client.fin}</TableCell>
+                    <TableCell>
+                      <span className="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">
+                        {client.statut}
+                      </span>
+                    </TableCell>
+                    <TableCell className="space-x-2">
+                      <Button variant="ghost" size="sm">
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Générer
+                      </Button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="ghost" size="sm" onClick={() => setSelectedClient(client.nom)}>
+                            <Eye className="w-4 h-4 mr-2" />
+                            Voir
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[800px]">
+                          <DialogHeader>
+                            <DialogTitle>Factures liées - {client.nom}</DialogTitle>
+                          </DialogHeader>
+                          <div className="mt-4">
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Numéro</TableHead>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Montant</TableHead>
+                                  <TableHead>Statut</TableHead>
+                                  <TableHead>Actions</TableHead>
                                 </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </TableCell>
-                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {facturesLiees.map((facture) => (
+                                  <TableRow key={facture.id}>
+                                    <TableCell>{facture.numero}</TableCell>
+                                    <TableCell>{facture.date}</TableCell>
+                                    <TableCell>{facture.montant}</TableCell>
+                                    <TableCell>
+                                      <span
+                                        className={cn(
+                                          "px-2 py-1 rounded-full text-xs font-medium",
+                                          {
+                                            "bg-green-100 text-green-800": facture.statut === "Payée",
+                                            "bg-yellow-100 text-yellow-800": facture.statut === "En attente",
+                                            "bg-blue-100 text-blue-800": facture.statut === "À générer",
+                                          }
+                                        )}
+                                      >
+                                        {facture.statut}
+                                      </span>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Dialog>
+                                        <DialogTrigger asChild>
+                                          <Button variant="ghost" size="sm" onClick={() => setSelectedFacture(facture)}>
+                                            <ExternalLink className="w-4 h-4 mr-2" />
+                                            Détails
+                                          </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="sm:max-w-[600px]">
+                                          <DialogHeader>
+                                            <DialogTitle>Détails de la facture {facture.numero}</DialogTitle>
+                                          </DialogHeader>
+                                          <div className="mt-4 space-y-4">
+                                            <div>
+                                              <h3 className="font-medium mb-2">Informations générales</h3>
+                                              <div className="grid grid-cols-2 gap-4 text-sm">
+                                                <div>
+                                                  <p className="text-muted-foreground">Numéro</p>
+                                                  <p>{facture.numero}</p>
+                                                </div>
+                                                <div>
+                                                  <p className="text-muted-foreground">Date</p>
+                                                  <p>{facture.date}</p>
+                                                </div>
+                                                <div>
+                                                  <p className="text-muted-foreground">Statut</p>
+                                                  <p>{facture.statut}</p>
+                                                </div>
+                                                <div>
+                                                  <p className="text-muted-foreground">Montant total</p>
+                                                  <p>{facture.montant}</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div>
+                                              <h3 className="font-medium mb-2">Détails de la prestation</h3>
+                                              <div className="space-y-2 text-sm">
+                                                <p><span className="text-muted-foreground">Description :</span> {facture.details.description}</p>
+                                                <p><span className="text-muted-foreground">Nombre de palettes :</span> {facture.details.nbPalettes}</p>
+                                                <p><span className="text-muted-foreground">Prix unitaire :</span> {facture.details.prixUnitaire}</p>
+                                                <div className="mt-4 p-3 bg-muted rounded-md">
+                                                  <p className="font-medium">Formule de calcul :</p>
+                                                  <p>{facture.details.formule}</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </DialogContent>
+                                      </Dialog>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </CardContent>
