@@ -113,7 +113,8 @@ const NavItem = ({
 export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  // We store the currently open submenu ID instead of its Link
+  const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -123,8 +124,7 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
         const items = await MenuService.loadMenu();
         setMenuItems(items);
         
-        // Nous ne voulons plus ouvrir automatiquement le sous-menu au chargement initial
-        // Nous ouvrons seulement le sous-menu si l'utilisateur navigue vers une page dans un sous-menu
+        // Only open submenu if we're on a page within a submenu
         if (currentPath !== "/" && currentPath !== "") {
           const currentPageParent = items.find(item => 
             item.hasChildren && item.subMenu.some(sub => 
@@ -133,7 +133,8 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
           );
           
           if (currentPageParent) {
-            setOpenSubmenu(currentPageParent.Link);
+            // Store the ID instead of the Link for more reliable comparison
+            setOpenSubmenu(currentPageParent.ID);
           }
         }
       } catch (error) {
@@ -146,10 +147,10 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
     loadMenu();
   }, [currentPath]);
 
-  const handleToggleSubmenu = (itemLink: string) => {
-    // Ferme tous les autres sous-menus et n'ouvre que celui qui est cliqué
-    // Si le même sous-menu est cliqué alors qu'il est déjà ouvert, il se ferme
-    setOpenSubmenu(openSubmenu === itemLink ? null : itemLink);
+  // Updated to use ID instead of Link for more reliable tracking
+  const handleToggleSubmenu = (itemId: number) => {
+    // Close the submenu if it's already open, otherwise open it and close all others
+    setOpenSubmenu(openSubmenu === itemId ? null : itemId);
   };
 
   if (loading) {
@@ -174,14 +175,16 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
                 : currentPath.startsWith(routerPath)
             }
             hasSubmenu={item.hasChildren === 1}
-            isSubmenuOpen={openSubmenu === item.Link}
+            // Compare with ID instead of Link for consistency
+            isSubmenuOpen={openSubmenu === item.ID}
             subItems={item.hasChildren === 1 ? item.subMenu.map(sub => ({
               icon: MenuService.getIconClass(sub.icon),
               label: sub.Name,
               path: MenuService.getRouterPath(sub.Link),
               id: `${item.ID}-${sub.Link}` // Create a unique ID combining parent and child info
             })) : []}
-            onToggleSubmenu={() => handleToggleSubmenu(item.Link)}
+            // Pass the item ID instead of the Link for more reliable comparison
+            onToggleSubmenu={() => handleToggleSubmenu(item.ID)}
             collapsed={collapsed}
           />
         );
