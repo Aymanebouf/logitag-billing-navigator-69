@@ -17,6 +17,7 @@ interface NavItemProps {
     icon: string;
     label: string;
     path: string;
+    id: string; // Add unique identifier for sub-items
   }>;
   onToggleSubmenu?: () => void;
   collapsed?: boolean;
@@ -34,6 +35,7 @@ const NavItem = ({
   collapsed = false
 }: NavItemProps) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Add location to check the current path
   
   // Si le menu est collapsed et a un sous-menu, on n'affiche que l'icône
   if (collapsed && hasSubmenu) {
@@ -93,7 +95,7 @@ const NavItem = ({
         <div className="ml-4 mt-1">
           {subItems.map((item) => (
             <Button
-              key={item.path}
+              key={item.id} // Use the unique identifier
               text
               className={`w-full text-left flex align-items-center p-2 pl-5 ${location.pathname === item.path ? 'bg-primary-50' : ''}`}
               onClick={() => navigate(item.path)}
@@ -176,7 +178,8 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
             subItems={item.hasChildren === 1 ? item.subMenu.map(sub => ({
               icon: MenuService.getIconClass(sub.icon),
               label: sub.Name,
-              path: MenuService.getRouterPath(sub.Link)
+              path: MenuService.getRouterPath(sub.Link),
+              id: `${item.ID}-${sub.Link}` // Create a unique ID combining parent and child info
             })) : []}
             onToggleSubmenu={() => handleToggleSubmenu(item.Link)}
             collapsed={collapsed}

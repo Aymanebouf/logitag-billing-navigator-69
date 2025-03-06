@@ -61,6 +61,14 @@ class MenuService {
     }
     
     if (path.startsWith('facture/fournisseur')) {
+      // Improved fournisseur path handling with specific subdirectories
+      if (path === 'facture/fournisseurAfacturer') return '/factures-fournisseur/a-facturer';
+      if (path === 'facture/fournisseurFacturer') return '/factures-fournisseur/factures';
+      if (path === 'facture/FactureArchiverFournisseur') return '/factures-fournisseur/archive';
+      if (path === 'facture/fournisseurValidation') return '/factures-fournisseur/validation';
+      if (path === 'facture/fournisseurParametreFacturaion') return '/factures-fournisseur/parametres';
+      
+      // Default fallback for facture/fournisseur
       return '/factures-fournisseur';
     }
 
@@ -68,6 +76,7 @@ class MenuService {
     if (path === 'rapports/index') return '/rapports';
     if (path === 'facture/parametre') return '/parametres';
     if (path === 'tagdashboard/index' || path === 'dashboard/index') return '/';
+    if (path === 'Imporation/index') return '/importation';
 
     // Pour les liens qui ne correspondent à aucun cas spécial
     return '/';
