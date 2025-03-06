@@ -121,7 +121,7 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
         const items = await MenuService.loadMenu();
         setMenuItems(items);
         
-        // Modifier: Nous ne voulons plus ouvrir automatiquement le sous-menu au chargement initial
+        // Nous ne voulons plus ouvrir automatiquement le sous-menu au chargement initial
         // Nous ouvrons seulement le sous-menu si l'utilisateur navigue vers une page dans un sous-menu
         if (currentPath !== "/" && currentPath !== "") {
           const currentPageParent = items.find(item => 
@@ -145,7 +145,8 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
   }, [currentPath]);
 
   const handleToggleSubmenu = (itemLink: string) => {
-    // Simplement basculer l'état du sous-menu cliqué, sans affecter les autres
+    // Ferme tous les autres sous-menus et n'ouvre que celui qui est cliqué
+    // Si le même sous-menu est cliqué alors qu'il est déjà ouvert, il se ferme
     setOpenSubmenu(openSubmenu === itemLink ? null : itemLink);
   };
 
