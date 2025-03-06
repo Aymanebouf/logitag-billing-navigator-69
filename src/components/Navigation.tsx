@@ -121,15 +121,18 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
         const items = await MenuService.loadMenu();
         setMenuItems(items);
         
-        // Ouvrir automatiquement le sous-menu correspondant à la page actuelle
-        const currentPageParent = items.find(item => 
-          item.hasChildren && item.subMenu.some(sub => 
-            MenuService.getRouterPath(sub.Link) === currentPath
-          )
-        );
-        
-        if (currentPageParent) {
-          setOpenSubmenu(currentPageParent.Link);
+        // Modifier: Nous ne voulons plus ouvrir automatiquement le sous-menu au chargement initial
+        // Nous ouvrons seulement le sous-menu si l'utilisateur navigue vers une page dans un sous-menu
+        if (currentPath !== "/" && currentPath !== "") {
+          const currentPageParent = items.find(item => 
+            item.hasChildren && item.subMenu.some(sub => 
+              MenuService.getRouterPath(sub.Link) === currentPath
+            )
+          );
+          
+          if (currentPageParent) {
+            setOpenSubmenu(currentPageParent.Link);
+          }
         }
       } catch (error) {
         console.error("Erreur lors du chargement du menu:", error);
@@ -140,6 +143,11 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
 
     loadMenu();
   }, [currentPath]);
+
+  const handleToggleSubmenu = (itemLink: string) => {
+    // Simplement basculer l'état du sous-menu cliqué, sans affecter les autres
+    setOpenSubmenu(openSubmenu === itemLink ? null : itemLink);
+  };
 
   if (loading) {
     return <div className="p-3 text-center">Chargement du menu...</div>;
@@ -169,7 +177,7 @@ export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
               label: sub.Name,
               path: MenuService.getRouterPath(sub.Link)
             })) : []}
-            onToggleSubmenu={() => setOpenSubmenu(openSubmenu === item.Link ? null : item.Link)}
+            onToggleSubmenu={() => handleToggleSubmenu(item.Link)}
             collapsed={collapsed}
           />
         );
