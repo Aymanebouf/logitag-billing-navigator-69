@@ -16,13 +16,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 
 const AFacturer = () => {
+  const [pageTitle, setPageTitle] = useState("Génération factures");
+
+  useEffect(() => {
+    document.title = "Logitag - Génération factures";
+  }, []);
+
   return (
     <Layout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Client.AFacturer</h1>
+          <h1 className="text-2xl font-bold">{pageTitle}</h1>
           <Select>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select List" />

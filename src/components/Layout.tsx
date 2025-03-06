@@ -1,10 +1,34 @@
 
 import { Navigation } from "./Navigation";
 import { Button } from "primereact/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import MenuService from "@/services/MenuService";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const initMenu = async () => {
+      try {
+        await MenuService.loadMenu();
+      } catch (error) {
+        console.error("Erreur lors de l'initialisation du menu:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initMenu();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-white">

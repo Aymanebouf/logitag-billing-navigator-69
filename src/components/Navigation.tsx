@@ -1,8 +1,10 @@
 
 import { Button } from "primereact/button";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "primeicons/primeicons.css";
+import MenuService from "@/services/MenuService";
+import { MenuItem } from "@/types/menu.types";
 
 interface NavItemProps {
   icon: string;
@@ -109,99 +111,69 @@ const NavItem = ({
 export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>("factures-client");
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const navItems = [
-    {
-      icon: "pi pi-th-large",
-      label: "Dashboard",
-      path: "/",
-      hasSubmenu: false
-    },
-    {
-      icon: "pi pi-file",
-      label: "Factures Client",
-      path: "/factures-client",
-      hasSubmenu: true,
-      subItems: [
-        {
-          icon: "pi pi-calendar",
-          label: "Génération factures",
-          path: "/factures-client/a-facturer",
-        },
-        {
-          icon: "pi pi-file",
-          label: "Gestion factures",
-          path: "/factures-client/factures",
-        },
-        {
-          icon: "pi pi-refresh",
-          label: "Factures permanentes",
-          path: "/factures-client/permanentes",
-        },
-        {
-          icon: "pi pi-inbox",
-          label: "Documents archivés",
-          path: "/factures-client/archive",
-        },
-        {
-          icon: "pi pi-check-square",
-          label: "Validation documents",
-          path: "/factures-client/validation",
-        },
-        {
-          icon: "pi pi-cog",
-          label: "Configuration",
-          path: "/factures-client/parametres",
-        },
-      ],
-    },
-    {
-      icon: "pi pi-file-o",
-      label: "Factures Fournisseur",
-      path: "/factures-fournisseur",
-      hasSubmenu: false
-    },
-    {
-      icon: "pi pi-box",
-      label: "Inventory",
-      path: "/inventory",
-      hasSubmenu: false
-    },
-    {
-      icon: "pi pi-chart-bar",
-      label: "Rapports",
-      path: "/rapports",
-      hasSubmenu: false
-    },
-    {
-      icon: "pi pi-cog",
-      label: "Paramètres",
-      path: "/parametres",
-      hasSubmenu: false
-    }
-  ];
+  useEffect(() => {
+    const loadMenu = async () => {
+      try {
+        const items = await MenuService.loadMenu();
+        setMenuItems(items);
+        
+        // Ouvrir automatiquement le sous-menu correspondant à la page actuelle
+        const currentPageParent = items.find(item => 
+          item.hasChildren && item.subMenu.some(sub => 
+            MenuService.getRouterPath(sub.Link) === currentPath
+          )
+        );
+        
+        if (currentPageParent) {
+          setOpenSubmenu(currentPageParent.Link);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement du menu:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMenu();
+  }, [currentPath]);
+
+  if (loading) {
+    return <div className="p-3 text-center">Chargement du menu...</div>;
+  }
 
   return (
     <nav className={`p-3 overflow-y-auto flex-grow-1`}>
-      {navItems.map((item) => (
-        <NavItem
-          key={item.path}
-          icon={item.icon}
-          label={item.label}
-          path={item.path}
-          isActive={
-            item.path === '/' 
-              ? currentPath === '/' 
-              : currentPath.startsWith(item.path)
-          }
-          hasSubmenu={item.hasSubmenu}
-          isSubmenuOpen={openSubmenu === item.path}
-          subItems={item.hasSubmenu ? item.subItems : []}
-          onToggleSubmenu={() => setOpenSubmenu(openSubmenu === item.path ? null : item.path)}
-          collapsed={collapsed}
-        />
-      ))}
+      {menuItems.map((item) => {
+        const routerPath = MenuService.getRouterPath(item.Link);
+        const iconClass = MenuService.getIconClass(item.icon);
+        
+        return (
+          <NavItem
+            key={item.ID.toString()}
+            icon={iconClass}
+            label={item.Name}
+            path={routerPath}
+            isActive={
+              routerPath === '/' 
+                ? currentPath === '/' 
+                : currentPath.startsWith(routerPath)
+            }
+            hasSubmenu={item.hasChildren === 1}
+            isSubmenuOpen={openSubmenu === item.Link}
+            subItems={item.hasChildren === 1 ? item.subMenu.map(sub => ({
+              icon: MenuService.getIconClass(sub.icon),
+              label: sub.Name,
+              path: MenuService.getRouterPath(sub.Link)
+            })) : []}
+            onToggleSubmenu={() => setOpenSubmenu(openSubmenu === item.Link ? null : item.Link)}
+            collapsed={collapsed}
+          />
+        );
+      })}
     </nav>
   );
 }
