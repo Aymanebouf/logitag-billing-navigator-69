@@ -5,7 +5,6 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { CheckCircle, XCircle } from "lucide-react";
-import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Validation = () => {
   const toast = useRef(null);
@@ -51,7 +50,7 @@ const Validation = () => {
 
         <div className="grid gap-6">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className={PrimeAdapter.cardClass("hover:shadow-md transition-shadow")}>
+            <Card key={i} className="hover:shadow-md transition-shadow">
               <div className="p-6">
                 <div className="flex justify-between items-center">
                   <div>
@@ -60,15 +59,15 @@ const Validation = () => {
                   </div>
                   <div className="flex gap-2">
                     <Button 
-                      className={PrimeAdapter.buttonClass("outline", "sm")} 
+                      className="p-button-outlined p-button-sm" 
                       label="Rejeter" 
-                      icon={() => <XCircle className="w-4 h-4 mr-1" />}
+                      icon={<XCircle className="w-4 h-4 mr-1" />}
                       onClick={() => handleReject(i)}
                     />
                     <Button 
-                      className={PrimeAdapter.buttonClass("default", "sm")} 
+                      className="p-button-sm" 
                       label="Valider" 
-                      icon={() => <CheckCircle className="w-4 h-4 mr-1" />}
+                      icon={<CheckCircle className="w-4 h-4 mr-1" />}
                       onClick={() => handleValidate(i)}
                     />
                   </div>
