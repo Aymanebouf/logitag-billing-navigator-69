@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Card } from "primereact/card";
@@ -10,7 +9,6 @@ import { Calendar } from "primereact/calendar";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FileText, Calendar as CalendarIcon, Eye, ExternalLink, Plus } from "lucide-react";
-import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const FacturePermanente = () => {
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
@@ -197,7 +195,6 @@ const FacturePermanente = () => {
     { label: 'Après la période', value: 'apres' }
   ];
 
-  // Fonction pour afficher les détails selon le type de prestation
   const renderDetailsFields = (facture) => {
     const details = facture.details;
     
@@ -327,12 +324,12 @@ const FacturePermanente = () => {
         <Button 
           icon={() => <CalendarIcon className="w-4 h-4 mr-2" />}
           label="Générer" 
-          className={PrimeAdapter.buttonClass("secondary", "sm")}
+          className="p-button-secondary p-button-sm"
         />
         <Button 
           icon={() => <Eye className="w-4 h-4 mr-2" />}
           label="Voir" 
-          className={PrimeAdapter.buttonClass("secondary", "sm")}
+          className="p-button-secondary p-button-sm"
           onClick={() => { 
             setSelectedClient(rowData.nom); 
             setClientDialogVisible(true); 
@@ -347,7 +344,7 @@ const FacturePermanente = () => {
       <Button 
         icon={() => <ExternalLink className="w-4 h-4 mr-2" />}
         label="Détails" 
-        className={PrimeAdapter.buttonClass("ghost", "sm")}
+        className="p-button-text p-button-sm"
         onClick={() => { 
           setSelectedFacture(rowData); 
           setFactureDetailsDialogVisible(true); 
@@ -361,13 +358,13 @@ const FacturePermanente = () => {
       <Button 
         label="Annuler" 
         icon="pi pi-times" 
-        className={PrimeAdapter.buttonClass("outline")}
+        className="p-button-outlined mr-2"
         onClick={() => { /* action d'annulation */ }}
       />
       <Button 
         label="Créer l'abonnement" 
         icon={() => <FileText className="w-4 h-4 mr-2" />}
-        className={PrimeAdapter.buttonClass("default")}
+        className="p-button"
         onClick={() => { /* action de création */ }}
       />
     </div>
@@ -389,7 +386,7 @@ const FacturePermanente = () => {
           <Button 
             label="Nouvelle facture permanente" 
             icon={() => <Plus className="w-4 h-4 mr-2" />}
-            className={PrimeAdapter.buttonClass()}
+            className="p-button"
             onClick={() => {
               // Ouvrir le dialogue pour nouvelle facture
             }}
@@ -398,12 +395,12 @@ const FacturePermanente = () => {
           <div className="w-64">
             <InputText 
               placeholder="Rechercher..." 
-              className={PrimeAdapter.inputClass()}
+              className="w-full"
             />
           </div>
         </div>
 
-        <Card className={PrimeAdapter.cardClass()}>
+        <Card className="shadow-sm">
           <div className="flex flex-col space-y-1.5 p-6 border-b">
             <h3 className="text-2xl font-semibold leading-none tracking-tight">
               Liste des factures permanentes
@@ -416,7 +413,7 @@ const FacturePermanente = () => {
               rows={10} 
               rowsPerPageOptions={[5, 10, 25, 50]} 
               tableStyle={{ minWidth: '50rem' }}
-              className={PrimeAdapter.tableClass()}
+              className="p-datatable-sm"
             >
               <Column field="nom" header="Client" />
               <Column field="description" header="Description" />
@@ -429,13 +426,12 @@ const FacturePermanente = () => {
           </div>
         </Card>
 
-        {/* Dialogues */}
         <Dialog 
           header={`Factures liées - ${selectedClient}`} 
           visible={clientDialogVisible} 
           style={{ width: '800px' }} 
           onHide={() => setClientDialogVisible(false)}
-          className={PrimeAdapter.dialogClass()}
+          className="p-fluid"
         >
           <div className="mt-4">
             <DataTable 
@@ -444,7 +440,7 @@ const FacturePermanente = () => {
               rows={5} 
               rowsPerPageOptions={[5, 10, 25]} 
               tableStyle={{ minWidth: '40rem' }}
-              className={PrimeAdapter.tableClass()}
+              className="p-datatable-sm"
             >
               <Column field="numero" header="Numéro" />
               <Column field="date" header="Date" />
@@ -460,7 +456,7 @@ const FacturePermanente = () => {
           visible={factureDetailsDialogVisible} 
           style={{ width: '600px' }} 
           onHide={() => setFactureDetailsDialogVisible(false)}
-          className={PrimeAdapter.dialogClass()}
+          className="p-fluid"
         >
           {selectedFacture && (
             <div className="mt-4 space-y-4">
@@ -505,61 +501,61 @@ const FacturePermanente = () => {
           style={{ width: '450px' }} 
           footer={footerNewFactureDialog}
           onHide={() => {/* action de fermeture */}}
-          className={PrimeAdapter.dialogClass()}
+          className="p-fluid"
         >
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Client</label>
+              <label className="block text-sm font-medium text-gray-700">Client</label>
               <InputText 
                 placeholder="Nom du client" 
-                className={PrimeAdapter.inputClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Description de la prestation</label>
+              <label className="block text-sm font-medium text-gray-700">Description de la prestation</label>
               <InputText 
                 placeholder="Description" 
-                className={PrimeAdapter.inputClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Type de prestation</label>
+              <label className="block text-sm font-medium text-gray-700">Type de prestation</label>
               <Dropdown 
                 options={typePrestations} 
                 placeholder="Choisir un type" 
-                className={PrimeAdapter.selectClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Périodicité</label>
+              <label className="block text-sm font-medium text-gray-700">Périodicité</label>
               <Dropdown 
                 options={periodes} 
                 placeholder="Choisir une périodicité" 
-                className={PrimeAdapter.selectClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Moment de facturation</label>
+              <label className="block text-sm font-medium text-gray-700">Moment de facturation</label>
               <Dropdown 
                 options={moments} 
                 placeholder="Choisir le moment" 
-                className={PrimeAdapter.selectClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Date de début</label>
+              <label className="block text-sm font-medium text-gray-700">Date de début</label>
               <Calendar 
                 showIcon 
                 placeholder="Sélectionner une date" 
-                className={PrimeAdapter.inputClass()}
+                className="w-full"
               />
             </div>
             <div className="space-y-2">
-              <label className={PrimeAdapter.labelClass()}>Date de fin (optionnelle)</label>
+              <label className="block text-sm font-medium text-gray-700">Date de fin (optionnelle)</label>
               <Calendar 
                 showIcon 
                 placeholder="Sélectionner une date" 
-                className={PrimeAdapter.inputClass()}
+                className="w-full"
               />
               <p className="text-xs text-muted-foreground">
                 Laissez vide pour un abonnement sans date de fin

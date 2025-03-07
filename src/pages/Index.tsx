@@ -4,7 +4,6 @@ import { Card } from "primereact/card";
 import { Layout } from "@/components/Layout";
 import { FileText, Truck, Users } from "lucide-react";
 import { useEffect, useState } from "react";
-import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const data = [
   { name: 'January', tagged: 65, enter: 28, exit: 20 },
@@ -24,7 +23,7 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, value, icon, description }: StatCardProps) => (
-  <Card className={PrimeAdapter.cardClass("p-6 bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm hover:shadow-md transition-shadow")}>
+  <Card className="p-6 bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
     <div className="flex items-center gap-4">
       <div className="p-3 rounded-full bg-primary/10 text-primary">
         {icon}
@@ -138,7 +137,7 @@ const Index = () => {
         />
       </div>
 
-      <Card className={PrimeAdapter.cardClass("p-6")}>
+      <Card className="p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-6">Activité mensuelle</h2>
         <div className="h-[400px] w-full">
           <Chart type="bar" data={chartData} options={chartOptions} style={{ width: '100%', height: '100%' }} />

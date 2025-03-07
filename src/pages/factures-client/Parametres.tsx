@@ -4,7 +4,6 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Parametres = () => {
   return (
@@ -20,7 +19,7 @@ const Parametres = () => {
         </header>
 
         <div className="grid gap-6">
-          <Card className={PrimeAdapter.cardClass()}>
+          <Card className="shadow-sm">
             <div className="flex flex-col space-y-1.5 p-6 border-b">
               <h3 className="text-2xl font-semibold leading-none tracking-tight">
                 Informations de l'entreprise
@@ -29,21 +28,21 @@ const Parametres = () => {
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>Nom de l'entreprise</label>
-                  <InputText className={PrimeAdapter.inputClass()} placeholder="Votre entreprise" />
+                  <label className="block text-sm font-medium text-gray-700">Nom de l'entreprise</label>
+                  <InputText className="w-full" placeholder="Votre entreprise" />
                 </div>
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>SIRET</label>
-                  <InputText className={PrimeAdapter.inputClass()} placeholder="123 456 789 00001" />
+                  <label className="block text-sm font-medium text-gray-700">SIRET</label>
+                  <InputText className="w-full" placeholder="123 456 789 00001" />
                 </div>
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>TVA Intracommunautaire</label>
-                  <InputText className={PrimeAdapter.inputClass()} placeholder="FR 12 345678900" />
+                  <label className="block text-sm font-medium text-gray-700">TVA Intracommunautaire</label>
+                  <InputText className="w-full" placeholder="FR 12 345678900" />
                 </div>
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>Devise par défaut</label>
+                  <label className="block text-sm font-medium text-gray-700">Devise par défaut</label>
                   <Dropdown 
-                    className={PrimeAdapter.selectClass()} 
+                    className="w-full" 
                     options={[
                       { label: 'EUR (€)', value: 'eur' },
                       { label: 'USD ($)', value: 'usd' }
@@ -55,7 +54,7 @@ const Parametres = () => {
             </div>
           </Card>
 
-          <Card className={PrimeAdapter.cardClass()}>
+          <Card className="shadow-sm">
             <div className="flex flex-col space-y-1.5 p-6 border-b">
               <h3 className="text-2xl font-semibold leading-none tracking-tight">
                 Numérotation des factures
@@ -64,19 +63,19 @@ const Parametres = () => {
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>Préfixe</label>
-                  <InputText className={PrimeAdapter.inputClass()} placeholder="FAC-" />
+                  <label className="block text-sm font-medium text-gray-700">Préfixe</label>
+                  <InputText className="w-full" placeholder="FAC-" />
                 </div>
                 <div className="space-y-2">
-                  <label className={PrimeAdapter.labelClass()}>Numéro suivant</label>
-                  <InputText className={PrimeAdapter.inputClass()} placeholder="2024001" />
+                  <label className="block text-sm font-medium text-gray-700">Numéro suivant</label>
+                  <InputText className="w-full" placeholder="2024001" />
                 </div>
               </div>
             </div>
           </Card>
 
           <div className="flex justify-end">
-            <Button className={PrimeAdapter.buttonClass()} label="Enregistrer les modifications" />
+            <Button className="p-button" label="Enregistrer les modifications" />
           </div>
         </div>
       </div>
