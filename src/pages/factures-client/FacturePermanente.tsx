@@ -40,15 +40,15 @@ const FacturePermanente = () => {
 
   const facturesLiees = [
     { id: 1, numero: "F2024-001", date: "01/01/2024", montant: "500 €", statut: "Payée", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Janvier 2024", formule: "5 palettes × 40 DH = 200 DH" } },
-    { id: 2, numero: "F2024-002", date: "01/02/2024", montant: "750 €", statut: "Payée", details: { heures: 15, tauxHoraire: "50 DH", description: "Maintenance équipement - Février 2024", formule: "15 heures × 50 DH = 750 DH" } },
-    { id: 3, numero: "F2024-003", date: "01/03/2024", montant: "1200 €", statut: "En attente", details: { surface: 60, prixM2: "20 DH", description: "Nettoyage industriel - Mars 2024", formule: "60 m² × 20 DH = 1200 DH" } },
-    { id: 4, numero: "F2024-004", date: "01/04/2024", montant: "2000 €", statut: "En attente", details: { nbContainers: 4, prixContainer: "500 DH", description: "Stockage containers - Avril 2024", formule: "4 containers × 500 DH = 2000 DH" } },
-    { id: 5, numero: "F2024-005", date: "01/05/2024", montant: "3600 €", statut: "À générer", details: { poidsTotal: 1200, prixKg: "3 DH", description: "Transport marchandises - Mai 2024", formule: "1200 kg × 3 DH = 3600 DH" } },
-    { id: 6, numero: "F2024-006", date: "01/06/2024", montant: "900 €", statut: "À générer", details: { nbPersonnes: 6, prixPersonne: "150 DH", description: "Formation sécurité - Juin 2024", formule: "6 personnes × 150 DH = 900 DH" } },
-    { id: 7, numero: "F2024-007", date: "01/07/2024", montant: "1500 €", statut: "À générer", details: { nbMachines: 3, prixMaintenance: "500 DH", description: "Maintenance préventive - Juillet 2024", formule: "3 machines × 500 DH = 1500 DH" } },
-    { id: 8, numero: "F2024-008", date: "01/08/2024", montant: "4000 €", statut: "À générer", details: { puissance: 2000, prixKw: "2 DH", description: "Consommation électrique - Août 2024", formule: "2000 kW × 2 DH = 4000 DH" } },
-    { id: 9, numero: "F2024-009", date: "01/09/2024", montant: "2500 €", statut: "À générer", details: { volume: 50, prixM3: "50 DH", description: "Location espace stockage - Septembre 2024", formule: "50 m³ × 50 DH = 2500 DH" } },
-    { id: 10, numero: "F2024-010", date: "01/10/2024", montant: "1800 €", statut: "À générer", details: { distance: 600, prixKm: "3 DH", description: "Service livraison - Octobre 2024", formule: "600 km × 3 DH = 1800 DH" } },
+    { id: 2, numero: "F2024-002", date: "01/02/2024", montant: "500 €", statut: "Payée", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Février 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 3, numero: "F2024-003", date: "01/03/2024", montant: "500 €", statut: "En attente", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Mars 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 4, numero: "F2024-004", date: "01/04/2024", montant: "500 €", statut: "En attente", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Avril 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 5, numero: "F2024-005", date: "01/05/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Mai 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 6, numero: "F2024-006", date: "01/06/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Juin 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 7, numero: "F2024-007", date: "01/07/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Juillet 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 8, numero: "F2024-008", date: "01/08/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Août 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 9, numero: "F2024-009", date: "01/09/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Septembre 2024", formule: "5 palettes × 40 DH = 200 DH" } },
+    { id: 10, numero: "F2024-010", date: "01/10/2024", montant: "500 €", statut: "À générer", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Octobre 2024", formule: "5 palettes × 40 DH = 200 DH" } },
   ];
 
   const clientsList = [
