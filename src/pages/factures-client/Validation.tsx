@@ -1,13 +1,44 @@
 
+import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { CheckCircle, XCircle } from "lucide-react";
 import { PrimeAdapter } from "@/components/PrimeAdapter";
+import { Toast } from "primereact/toast";
 
 const Validation = () => {
+  const toast = useRef(null);
+
+  const showSuccessToast = (message) => {
+    toast.current.show({
+      severity: 'success',
+      summary: 'Succès',
+      detail: message,
+      life: 3000
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.current.show({
+      severity: 'error',
+      summary: 'Erreur',
+      detail: message,
+      life: 3000
+    });
+  };
+
+  const handleValidate = (factureId) => {
+    showSuccessToast(`Facture #${factureId} validée avec succès`);
+  };
+
+  const handleReject = (factureId) => {
+    showErrorToast(`Facture #${factureId} rejetée`);
+  };
+
   return (
     <Layout>
+      <Toast ref={toast} />
       <div className="space-y-6">
         <header className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -28,8 +59,18 @@ const Validation = () => {
                     <p className="text-sm text-muted-foreground">Client {String.fromCharCode(64 + i)}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button className={PrimeAdapter.buttonClass("outline", "sm")} label="Rejeter" icon={<XCircle className="w-4 h-4 mr-1" />} />
-                    <Button className={PrimeAdapter.buttonClass("default", "sm")} label="Valider" icon={<CheckCircle className="w-4 h-4 mr-1" />} />
+                    <Button 
+                      className={PrimeAdapter.buttonClass("outline", "sm")} 
+                      label="Rejeter" 
+                      icon={() => <XCircle className="w-4 h-4 mr-1" />}
+                      onClick={() => handleReject(i)}
+                    />
+                    <Button 
+                      className={PrimeAdapter.buttonClass("default", "sm")} 
+                      label="Valider" 
+                      icon={() => <CheckCircle className="w-4 h-4 mr-1" />}
+                      onClick={() => handleValidate(i)}
+                    />
                   </div>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
