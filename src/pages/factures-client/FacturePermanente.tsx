@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Layout } from "@/components/Layout";
@@ -39,16 +40,146 @@ const FacturePermanente = () => {
   const [selectedFacture, setSelectedFacture] = useState<any>(null);
 
   const facturesLiees = [
-    { id: 1, numero: "F2024-001", date: "01/01/2024", montant: "500 €", statut: "Payée", details: { nbPalettes: 5, prixUnitaire: "40 DH", description: "Location de palettes - Janvier 2024", formule: "5 palettes × 40 DH = 200 DH" } },
-    { id: 2, numero: "F2024-002", date: "01/02/2024", montant: "750 €", statut: "Payée", details: { heures: 15, tauxHoraire: "50 DH", description: "Maintenance équipement - Février 2024", formule: "15 heures × 50 DH = 750 DH" } },
-    { id: 3, numero: "F2024-003", date: "01/03/2024", montant: "1200 €", statut: "En attente", details: { surface: 60, prixM2: "20 DH", description: "Nettoyage industriel - Mars 2024", formule: "60 m² × 20 DH = 1200 DH" } },
-    { id: 4, numero: "F2024-004", date: "01/04/2024", montant: "2000 €", statut: "En attente", details: { nbContainers: 4, prixContainer: "500 DH", description: "Stockage containers - Avril 2024", formule: "4 containers × 500 DH = 2000 DH" } },
-    { id: 5, numero: "F2024-005", date: "01/05/2024", montant: "3600 €", statut: "À générer", details: { poidsTotal: 1200, prixKg: "3 DH", description: "Transport marchandises - Mai 2024", formule: "1200 kg × 3 DH = 3600 DH" } },
-    { id: 6, numero: "F2024-006", date: "01/06/2024", montant: "900 €", statut: "À générer", details: { nbPersonnes: 6, prixPersonne: "150 DH", description: "Formation sécurité - Juin 2024", formule: "6 personnes × 150 DH = 900 DH" } },
-    { id: 7, numero: "F2024-007", date: "01/07/2024", montant: "1500 €", statut: "À générer", details: { nbMachines: 3, prixMaintenance: "500 DH", description: "Maintenance préventive - Juillet 2024", formule: "3 machines × 500 DH = 1500 DH" } },
-    { id: 8, numero: "F2024-008", date: "01/08/2024", montant: "4000 €", statut: "À générer", details: { puissance: 2000, prixKw: "2 DH", description: "Consommation électrique - Août 2024", formule: "2000 kW × 2 DH = 4000 DH" } },
-    { id: 9, numero: "F2024-009", date: "01/09/2024", montant: "2500 €", statut: "À générer", details: { volume: 50, prixM3: "50 DH", description: "Location espace stockage - Septembre 2024", formule: "50 m³ × 50 DH = 2500 DH" } },
-    { id: 10, numero: "F2024-010", date: "01/10/2024", montant: "1800 €", statut: "À générer", details: { distance: 600, prixKm: "3 DH", description: "Service livraison - Octobre 2024", formule: "600 km × 3 DH = 1800 DH" } },
+    { 
+      id: 1, 
+      numero: "F2024-001", 
+      date: "01/01/2024", 
+      montant: "500 €", 
+      statut: "Payée", 
+      details: { 
+        nbPalettes: 5, 
+        prixUnitaire: "100 €", 
+        description: "Location de palettes - Janvier 2024", 
+        formule: "5 palettes × 100 € = 500 €", 
+        typePrestation: "location-palettes"
+      } 
+    },
+    { 
+      id: 2, 
+      numero: "F2024-002", 
+      date: "01/02/2024", 
+      montant: "750 €", 
+      statut: "Payée", 
+      details: { 
+        heures: 15, 
+        tauxHoraire: "50 €", 
+        description: "Maintenance équipement - Février 2024", 
+        formule: "15 heures × 50 € = 750 €", 
+        typePrestation: "maintenance"
+      } 
+    },
+    { 
+      id: 3, 
+      numero: "F2024-003", 
+      date: "01/03/2024", 
+      montant: "1200 €", 
+      statut: "En attente", 
+      details: { 
+        surface: 60, 
+        prixM2: "20 €", 
+        description: "Nettoyage industriel - Mars 2024", 
+        formule: "60 m² × 20 € = 1200 €", 
+        typePrestation: "nettoyage"
+      } 
+    },
+    { 
+      id: 4, 
+      numero: "F2024-004", 
+      date: "01/04/2024", 
+      montant: "2000 €", 
+      statut: "En attente", 
+      details: { 
+        nbContainers: 4, 
+        prixContainer: "500 €", 
+        description: "Stockage containers - Avril 2024", 
+        formule: "4 containers × 500 € = 2000 €", 
+        typePrestation: "stockage-containers" 
+      } 
+    },
+    { 
+      id: 5, 
+      numero: "F2024-005", 
+      date: "01/05/2024", 
+      montant: "3600 €", 
+      statut: "À générer", 
+      details: { 
+        poidsTotal: 1200, 
+        prixKg: "3 €", 
+        description: "Transport marchandises - Mai 2024", 
+        formule: "1200 kg × 3 € = 3600 €", 
+        typePrestation: "transport" 
+      } 
+    },
+    { 
+      id: 6, 
+      numero: "F2024-006", 
+      date: "01/06/2024", 
+      montant: "900 €", 
+      statut: "À générer", 
+      details: { 
+        nbPersonnes: 6, 
+        prixPersonne: "150 €", 
+        description: "Formation sécurité - Juin 2024", 
+        formule: "6 personnes × 150 € = 900 €", 
+        typePrestation: "formation" 
+      } 
+    },
+    { 
+      id: 7, 
+      numero: "F2024-007", 
+      date: "01/07/2024", 
+      montant: "1500 €", 
+      statut: "À générer", 
+      details: { 
+        nbMachines: 3, 
+        prixMaintenance: "500 €", 
+        description: "Maintenance préventive - Juillet 2024", 
+        formule: "3 machines × 500 € = 1500 €", 
+        typePrestation: "maintenance-machines" 
+      } 
+    },
+    { 
+      id: 8, 
+      numero: "F2024-008", 
+      date: "01/08/2024", 
+      montant: "4000 €", 
+      statut: "À générer", 
+      details: { 
+        puissance: 2000, 
+        prixKw: "2 €", 
+        description: "Consommation électrique - Août 2024", 
+        formule: "2000 kW × 2 € = 4000 €", 
+        typePrestation: "electricite" 
+      } 
+    },
+    { 
+      id: 9, 
+      numero: "F2024-009", 
+      date: "01/09/2024", 
+      montant: "2500 €", 
+      statut: "À générer", 
+      details: { 
+        volume: 50, 
+        prixM3: "50 €", 
+        description: "Location espace stockage - Septembre 2024", 
+        formule: "50 m³ × 50 € = 2500 €", 
+        typePrestation: "stockage-espace" 
+      } 
+    },
+    { 
+      id: 10, 
+      numero: "F2024-010", 
+      date: "01/10/2024", 
+      montant: "1800 €", 
+      statut: "À générer", 
+      details: { 
+        distance: 600, 
+        prixKm: "3 €", 
+        description: "Service livraison - Octobre 2024", 
+        formule: "600 km × 3 € = 1800 €", 
+        typePrestation: "livraison" 
+      } 
+    },
   ];
 
   const clientsList = [
@@ -60,6 +191,98 @@ const FacturePermanente = () => {
     { nom: "Client F", description: "Consulting", periodicite: "6 mois", prochaine: "30/06/2024", fin: "-", statut: "Actif" },
     { nom: "Client G", description: "Formation", periodicite: "3 mois", prochaine: "15/05/2024", fin: "31/12/2024", statut: "Actif" }
   ];
+
+  // Fonction pour afficher les détails selon le type de prestation
+  const renderDetailsFields = (facture) => {
+    const details = facture.details;
+    
+    switch(details.typePrestation) {
+      case "location-palettes":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Nombre de palettes :</span> {details.nbPalettes}</p>
+            <p><span className="text-muted-foreground">Prix unitaire :</span> {details.prixUnitaire}</p>
+          </>
+        );
+      case "maintenance":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Heures de travail :</span> {details.heures}</p>
+            <p><span className="text-muted-foreground">Taux horaire :</span> {details.tauxHoraire}</p>
+          </>
+        );
+      case "nettoyage":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Surface nettoyée :</span> {details.surface} m²</p>
+            <p><span className="text-muted-foreground">Prix au m² :</span> {details.prixM2}</p>
+          </>
+        );
+      case "stockage-containers":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Nombre de containers :</span> {details.nbContainers}</p>
+            <p><span className="text-muted-foreground">Prix par container :</span> {details.prixContainer}</p>
+          </>
+        );
+      case "transport":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Poids total :</span> {details.poidsTotal} kg</p>
+            <p><span className="text-muted-foreground">Prix au kg :</span> {details.prixKg}</p>
+          </>
+        );
+      case "formation":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Nombre de participants :</span> {details.nbPersonnes}</p>
+            <p><span className="text-muted-foreground">Prix par personne :</span> {details.prixPersonne}</p>
+          </>
+        );
+      case "maintenance-machines":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Nombre de machines :</span> {details.nbMachines}</p>
+            <p><span className="text-muted-foreground">Prix par machine :</span> {details.prixMaintenance}</p>
+          </>
+        );
+      case "electricite":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Puissance consommée :</span> {details.puissance} kW</p>
+            <p><span className="text-muted-foreground">Prix au kW :</span> {details.prixKw}</p>
+          </>
+        );
+      case "stockage-espace":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Volume :</span> {details.volume} m³</p>
+            <p><span className="text-muted-foreground">Prix au m³ :</span> {details.prixM3}</p>
+          </>
+        );
+      case "livraison":
+        return (
+          <>
+            <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+            <p><span className="text-muted-foreground">Distance parcourue :</span> {details.distance} km</p>
+            <p><span className="text-muted-foreground">Prix au km :</span> {details.prixKm}</p>
+          </>
+        );
+      default:
+        return (
+          <p><span className="text-muted-foreground">Description :</span> {details.description}</p>
+        );
+    }
+  };
 
   return (
     <Layout>
@@ -93,6 +316,26 @@ const FacturePermanente = () => {
                 <div className="space-y-2">
                   <Label htmlFor="description">Description de la prestation</Label>
                   <Input id="description" placeholder="Description" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="typePrestation">Type de prestation</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choisir un type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="location-palettes">Location de palettes</SelectItem>
+                      <SelectItem value="maintenance">Services de maintenance</SelectItem>
+                      <SelectItem value="nettoyage">Nettoyage industriel</SelectItem>
+                      <SelectItem value="stockage-containers">Stockage de containers</SelectItem>
+                      <SelectItem value="transport">Transport de marchandises</SelectItem>
+                      <SelectItem value="formation">Formation</SelectItem>
+                      <SelectItem value="maintenance-machines">Maintenance de machines</SelectItem>
+                      <SelectItem value="electricite">Consommation électrique</SelectItem>
+                      <SelectItem value="stockage-espace">Location d'espace de stockage</SelectItem>
+                      <SelectItem value="livraison">Service de livraison</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="periodicite">Périodicité</Label>
@@ -259,9 +502,7 @@ const FacturePermanente = () => {
                                             <div>
                                               <h3 className="font-medium mb-2">Détails de la prestation</h3>
                                               <div className="space-y-2 text-sm">
-                                                <p><span className="text-muted-foreground">Description :</span> {facture.details.description}</p>
-                                                <p><span className="text-muted-foreground">Nombre de palettes :</span> {facture.details.nbPalettes}</p>
-                                                <p><span className="text-muted-foreground">Prix unitaire :</span> {facture.details.prixUnitaire}</p>
+                                                {renderDetailsFields(facture)}
                                                 <div className="mt-4 p-3 bg-muted rounded-md">
                                                   <p className="font-medium">Formule de calcul :</p>
                                                   <p>{facture.details.formule}</p>
