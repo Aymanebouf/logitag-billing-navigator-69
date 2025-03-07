@@ -3,9 +3,9 @@ import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 import { CheckCircle, XCircle } from "lucide-react";
 import { PrimeAdapter } from "@/components/PrimeAdapter";
-import { Toast } from "primereact/toast";
 
 const Validation = () => {
   const toast = useRef(null);
