@@ -1,4 +1,7 @@
 
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -14,32 +17,30 @@ import Inventory from "./pages/inventory";
 import Rapports from "./pages/rapports";
 import Settings from "./pages/settings";
 
-// PrimeReact imports
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
-import "primeflex/primeflex.css";
-
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/factures-client/a-facturer" element={<AFacturer />} />
-        <Route path="/factures-client/factures" element={<Factures />} />
-        <Route path="/factures-client/permanentes" element={<FacturePermanente />} />
-        <Route path="/factures-client/archive" element={<Archive />} />
-        <Route path="/factures-client/validation" element={<Validation />} />
-        <Route path="/factures-client/parametres" element={<Parametres />} />
-        <Route path="/factures-fournisseur" element={<FactureFournisseur />} />
-        <Route path="/inventory" element={<Inventory />} />
-        <Route path="/rapports" element={<Rapports />} />
-        <Route path="/parametres" element={<Settings />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/factures-client/a-facturer" element={<AFacturer />} />
+          <Route path="/factures-client/factures" element={<Factures />} />
+          <Route path="/factures-client/permanentes" element={<FacturePermanente />} />
+          <Route path="/factures-client/archive" element={<Archive />} />
+          <Route path="/factures-client/validation" element={<Validation />} />
+          <Route path="/factures-client/parametres" element={<Parametres />} />
+          <Route path="/factures-fournisseur" element={<FactureFournisseur />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/rapports" element={<Rapports />} />
+          <Route path="/parametres" element={<Settings />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 

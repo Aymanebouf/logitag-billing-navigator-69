@@ -16,24 +16,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const AFacturer = () => {
-  const [pageTitle, setPageTitle] = useState("Génération factures");
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    document.title = "Logitag - Génération factures";
-  }, []);
-
   return (
     <Layout>
       <div className="space-y-6">
-        <div className={`${isMobile ? 'flex flex-col space-y-3' : 'flex justify-between items-center'}`}>
-          <h1 className="text-2xl font-bold">{pageTitle}</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Client.AFacturer</h1>
           <Select>
-            <SelectTrigger className={`${isMobile ? 'w-full' : 'w-[200px]'}`}>
+            <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select List" />
             </SelectTrigger>
             <SelectContent>
@@ -49,7 +40,7 @@ const AFacturer = () => {
               <CardTitle>Client</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className={`${isMobile ? 'flex flex-col space-y-3' : 'flex gap-4'}`}>
+              <div className="flex gap-4">
                 <div className="flex-1">
                   <Select>
                     <SelectTrigger>
@@ -61,35 +52,33 @@ const AFacturer = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className={`${isMobile ? 'flex justify-between' : ''}`}>
-                  <Button variant="secondary" className="mr-2">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Facture.overt
-                    <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
-                  </Button>
-                  <Button variant="secondary">
-                    <FileCheck className="w-4 h-4 mr-2" />
-                    C.Affaire
-                    <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
-                  </Button>
-                </div>
+                <Button variant="secondary">
+                  <FileText className="w-4 h-4 mr-2" />
+                  Facture.overt
+                  <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
+                </Button>
+                <Button variant="secondary">
+                  <FileCheck className="w-4 h-4 mr-2" />
+                  C.Affaire
+                  <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
+                </Button>
               </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardContent className="p-0">
-              <div className={`p-4 border-b ${isMobile ? 'flex flex-wrap' : 'flex items-center'} gap-2`}>
+              <div className="p-4 border-b flex items-center gap-4">
                 <Button variant="secondary" size="sm">Edit</Button>
                 <Button variant="secondary" size="sm">Facturer</Button>
                 <Button variant="outline" size="sm">Clear</Button>
-                <div className={`${isMobile ? 'w-full mt-2' : 'flex-1'}`} />
-                <div className={`${isMobile ? 'w-full' : 'relative w-64'}`}>
+                <div className="flex-1" />
+                <div className="relative w-64">
                   <Input placeholder="Recherche..." />
                 </div>
               </div>
-              <div className={`p-4 ${isMobile ? 'overflow-x-auto' : ''}`}>
-                <div className={`${isMobile ? 'w-[800px]' : ''} grid grid-cols-6 gap-4 font-medium text-sm border-b pb-2`}>
+              <div className="p-4">
+                <div className="grid grid-cols-6 gap-4 font-medium text-sm border-b pb-2">
                   <div>Parametre</div>
                   <div>N°.de.BL</div>
                   <div>Historique</div>

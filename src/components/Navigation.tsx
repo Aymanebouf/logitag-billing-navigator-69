@@ -1,25 +1,35 @@
-import { Button } from "primereact/button";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  LayoutDashboard,
+  FileText,
+  FileStack,
+  Package,
+  ChartBar,
+  Settings,
+  Calendar,
+  Archive,
+  CheckSquare,
+  Settings2,
+  Repeat
+} from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import "primeicons/primeicons.css";
-import MenuService from "@/services/MenuService";
-import { MenuItem } from "@/types/menu.types";
+import { useState } from "react";
 
 interface NavItemProps {
-  icon: string;
+  icon: React.ReactNode;
   label: string;
   path: string;
   isActive: boolean;
   hasSubmenu?: boolean;
   isSubmenuOpen?: boolean;
   subItems?: Array<{
-    icon: string;
+    icon: React.ReactNode;
     label: string;
     path: string;
-    id: string; // Add unique identifier for sub-items
   }>;
   onToggleSubmenu?: () => void;
-  collapsed?: boolean;
 }
 
 const NavItem = ({ 
@@ -30,52 +40,20 @@ const NavItem = ({
   hasSubmenu = false, 
   isSubmenuOpen = false,
   subItems = [],
-  onToggleSubmenu,
-  collapsed = false
+  onToggleSubmenu 
 }: NavItemProps) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Add location to check the current path
-  
-  // Si le menu est collapsed et a un sous-menu, on n'affiche que l'icône
-  if (collapsed && hasSubmenu) {
-    return (
-      <div className="mb-1">
-        <Button
-          text
-          className={`w-full justify-content-center p-3 ${isActive ? 'bg-primary-100' : ''}`}
-          onClick={() => onToggleSubmenu && onToggleSubmenu()}
-          tooltip={label}
-          tooltipOptions={{ position: 'right' }}
-        >
-          <i className={`${icon}`}></i>
-        </Button>
-      </div>
-    );
-  }
 
-  // Si le menu est collapsed et n'a pas de sous-menu
-  if (collapsed) {
-    return (
-      <div className="mb-1">
-        <Button
-          text
-          className={`w-full justify-content-center p-3 ${isActive ? 'bg-primary-100' : ''}`}
-          onClick={() => navigate(path)}
-          tooltip={label}
-          tooltipOptions={{ position: 'right' }}
-        >
-          <i className={`${icon}`}></i>
-        </Button>
-      </div>
-    );
-  }
-
-  // Menu normal avec ou sans sous-menu
   return (
-    <div className="mb-1">
+    <div>
       <Button
-        text
-        className={`w-full text-left flex align-items-center p-3 ${isActive ? 'bg-primary-100' : ''}`}
+        variant="ghost"
+        className={cn(
+          "w-full justify-start gap-2 transition-all",
+          isActive && "bg-accent text-accent-foreground",
+          hasSubmenu && "after:content-['>'] after:ml-auto",
+          isSubmenuOpen && "after:rotate-90"
+        )}
         onClick={() => {
           if (hasSubmenu && onToggleSubmenu) {
             onToggleSubmenu();
@@ -84,23 +62,23 @@ const NavItem = ({
           }
         }}
       >
-        <i className={`${icon} mr-2`}></i>
-        <span className="flex-grow-1">{label}</span>
-        {hasSubmenu && (
-          <i className={`pi pi-chevron-${isSubmenuOpen ? 'down' : 'right'} ml-auto`}></i>
-        )}
+        {icon}
+        {label}
       </Button>
       {isSubmenuOpen && subItems.length > 0 && (
-        <div className="ml-4 mt-1">
+        <div className="ml-4 mt-1 space-y-1">
           {subItems.map((item) => (
             <Button
-              key={item.id} // Use the unique identifier
-              text
-              className={`w-full text-left flex align-items-center p-2 pl-5 ${location.pathname === item.path ? 'bg-primary-50' : ''}`}
+              key={item.path}
+              variant="ghost"
+              className={cn(
+                "w-full justify-start gap-2 pl-6",
+                location.pathname === item.path && "bg-accent/50"
+              )}
               onClick={() => navigate(item.path)}
             >
-              <i className={`${item.icon} mr-2`}></i>
-              <span>{item.label}</span>
+              {item.icon}
+              {item.label}
             </Button>
           ))}
         </div>
@@ -109,95 +87,89 @@ const NavItem = ({
   );
 };
 
-export function Navigation({ collapsed = false }: { collapsed?: boolean }) {
+export function Navigation() {
   const location = useLocation();
   const currentPath = location.pathname;
-  // Changed from single ID to array of IDs to track multiple open submenus
-  const [openSubmenus, setOpenSubmenus] = useState<number[]>([]);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>("factures-client");
 
-  useEffect(() => {
-    const loadMenu = async () => {
-      try {
-        const items = await MenuService.loadMenu();
-        setMenuItems(items);
-        
-        // Only open submenu if we're on a page within a submenu
-        if (currentPath !== "/" && currentPath !== "") {
-          const currentPageParent = items.find(item => 
-            item.hasChildren && item.subMenu.some(sub => 
-              MenuService.getRouterPath(sub.Link) === currentPath
-            )
-          );
-          
-          if (currentPageParent) {
-            // Add the parent ID to open submenus if not already there
-            setOpenSubmenus(prev => 
-              prev.includes(currentPageParent.ID) 
-                ? prev 
-                : [...prev, currentPageParent.ID]
-            );
-          }
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement du menu:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadMenu();
-  }, [currentPath]);
-
-  // Updated to toggle a submenu in the array instead of replacing the single value
-  const handleToggleSubmenu = (itemId: number) => {
-    setOpenSubmenus(prev => {
-      // If submenu is already open, close it by removing from array
-      if (prev.includes(itemId)) {
-        return prev.filter(id => id !== itemId);
-      }
-      // Otherwise add it to the array of open submenus
-      return [...prev, itemId];
-    });
-  };
-
-  if (loading) {
-    return <div className="p-3 text-center">Chargement du menu...</div>;
-  }
+  const factureClientSubmenu = [
+    {
+      icon: <Calendar size={20} />,
+      label: "Génération factures",
+      path: "/factures-client/a-facturer",
+    },
+    {
+      icon: <FileText size={20} />,
+      label: "Gestion factures",
+      path: "/factures-client/factures",
+    },
+    {
+      icon: <Repeat size={20} />,
+      label: "Factures permanentes",
+      path: "/factures-client/permanentes",
+    },
+    {
+      icon: <Archive size={20} />,
+      label: "Documents archivés",
+      path: "/factures-client/archive",
+    },
+    {
+      icon: <CheckSquare size={20} />,
+      label: "Validation documents",
+      path: "/factures-client/validation",
+    },
+    {
+      icon: <Settings2 size={20} />,
+      label: "Configuration",
+      path: "/factures-client/parametres",
+    },
+  ];
 
   return (
-    <nav className={`p-3 overflow-y-auto flex-grow-1`}>
-      {menuItems.map((item) => {
-        const routerPath = MenuService.getRouterPath(item.Link);
-        const iconClass = MenuService.getIconClass(item.icon);
-        
-        return (
-          <NavItem
-            key={item.ID.toString()}
-            icon={iconClass}
-            label={item.Name}
-            path={routerPath}
-            isActive={
-              routerPath === '/' 
-                ? currentPath === '/' 
-                : currentPath.startsWith(routerPath)
-            }
-            hasSubmenu={item.hasChildren === 1}
-            // Check if this item's ID is in the openSubmenus array
-            isSubmenuOpen={openSubmenus.includes(item.ID)}
-            subItems={item.hasChildren === 1 ? item.subMenu.map(sub => ({
-              icon: MenuService.getIconClass(sub.icon),
-              label: sub.Name,
-              path: MenuService.getRouterPath(sub.Link),
-              id: `${item.ID}-${sub.Link}` // Create a unique ID combining parent and child info
-            })) : []}
-            // Toggle this specific submenu
-            onToggleSubmenu={() => handleToggleSubmenu(item.ID)}
-            collapsed={collapsed}
-          />
-        );
-      })}
+    <nav className="space-y-2 p-4">
+      <NavItem
+        icon={<LayoutDashboard size={20} />}
+        label="Dashboard"
+        path="/"
+        isActive={currentPath === "/"}
+        hasSubmenu={false}
+      />
+      <NavItem
+        icon={<FileText size={20} />}
+        label="Factures Client"
+        path="/factures-client"
+        isActive={currentPath.startsWith("/factures-client")}
+        hasSubmenu
+        isSubmenuOpen={openSubmenu === "factures-client"}
+        subItems={factureClientSubmenu}
+        onToggleSubmenu={() => setOpenSubmenu(openSubmenu === "factures-client" ? null : "factures-client")}
+      />
+      <NavItem
+        icon={<FileStack size={20} />}
+        label="Factures Fournisseur"
+        path="/factures-fournisseur"
+        isActive={currentPath === "/factures-fournisseur"}
+        hasSubmenu={false}
+      />
+      <NavItem
+        icon={<Package size={20} />}
+        label="Inventory"
+        path="/inventory"
+        isActive={currentPath === "/inventory"}
+      />
+      <NavItem
+        icon={<ChartBar size={20} />}
+        label="Rapports"
+        path="/rapports"
+        isActive={currentPath === "/rapports"}
+      />
+      <NavItem
+        icon={<Settings size={20} />}
+        label="Paramètres"
+        path="/parametres"
+        isActive={currentPath === "/parametres"}
+        hasSubmenu={false}
+      />
     </nav>
   );
 }

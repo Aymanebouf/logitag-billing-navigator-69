@@ -14,11 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const Archive = () => {
-  const isMobile = useIsMobile();
-  
   return (
     <Layout>
       <div className="space-y-6">
@@ -36,7 +33,7 @@ const Archive = () => {
             <CardTitle>Recherche dans les archives</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-3 gap-6'}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Année</label>
                 <Select>
@@ -70,7 +67,7 @@ const Archive = () => {
           </CardContent>
         </Card>
 
-        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'} gap-6`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
             <Card key={i} className="hover:shadow-md transition-shadow">
               <CardContent className="pt-6">
