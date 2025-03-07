@@ -1,21 +1,11 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
 import { FileText, FileCheck } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const AFacturer = () => {
   return (
@@ -23,58 +13,52 @@ const AFacturer = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Client.AFacturer</h1>
-          <Select>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Select List" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="list1">Liste 1</SelectItem>
-              <SelectItem value="list2">Liste 2</SelectItem>
-            </SelectContent>
-          </Select>
+          <Dropdown
+            className={PrimeAdapter.selectClass("w-[200px]")}
+            options={[
+              { label: 'Liste 1', value: 'list1' },
+              { label: 'Liste 2', value: 'list2' }
+            ]}
+            placeholder="Select List"
+          />
         </div>
 
         <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Client</CardTitle>
-            </CardHeader>
-            <CardContent>
+          <Card className={PrimeAdapter.cardClass()}>
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">Client</h3>
+            </div>
+            <div className="p-6">
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez un client" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="client1">Client 1</SelectItem>
-                      <SelectItem value="client2">Client 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Dropdown
+                    className={PrimeAdapter.selectClass()}
+                    options={[
+                      { label: 'Client 1', value: 'client1' },
+                      { label: 'Client 2', value: 'client2' }
+                    ]}
+                    placeholder="Sélectionnez un client"
+                  />
                 </div>
-                <Button variant="secondary">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Facture.overt
+                <Button className={PrimeAdapter.buttonClass("secondary")} label="Facture.overt" icon={<FileText className="w-4 h-4 mr-2" />}>
                   <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
                 </Button>
-                <Button variant="secondary">
-                  <FileCheck className="w-4 h-4 mr-2" />
-                  C.Affaire
+                <Button className={PrimeAdapter.buttonClass("secondary")} label="C.Affaire" icon={<FileCheck className="w-4 h-4 mr-2" />}>
                   <span className="ml-2 bg-gray-200 px-2 rounded">0</span>
                 </Button>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
-          <Card>
-            <CardContent className="p-0">
+          <Card className={PrimeAdapter.cardClass()}>
+            <div className="p-0">
               <div className="p-4 border-b flex items-center gap-4">
-                <Button variant="secondary" size="sm">Edit</Button>
-                <Button variant="secondary" size="sm">Facturer</Button>
-                <Button variant="outline" size="sm">Clear</Button>
+                <Button className={PrimeAdapter.buttonClass("secondary", "sm")} label="Edit" />
+                <Button className={PrimeAdapter.buttonClass("secondary", "sm")} label="Facturer" />
+                <Button className={PrimeAdapter.buttonClass("outline", "sm")} label="Clear" />
                 <div className="flex-1" />
                 <div className="relative w-64">
-                  <Input placeholder="Recherche..." />
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="Recherche..." />
                 </div>
               </div>
               <div className="p-4">
@@ -94,7 +78,7 @@ const AFacturer = () => {
                   <div>0 à 0 de 0 élément</div>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </div>
       </div>

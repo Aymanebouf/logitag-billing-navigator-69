@@ -1,21 +1,10 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
+import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Parametres = () => {
   return (
@@ -31,62 +20,63 @@ const Parametres = () => {
         </header>
 
         <div className="grid gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Informations de l'entreprise</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <Card className={PrimeAdapter.cardClass()}>
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                Informations de l'entreprise
+              </h3>
+            </div>
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Nom de l'entreprise</Label>
-                  <Input placeholder="Votre entreprise" />
+                  <label className={PrimeAdapter.labelClass()}>Nom de l'entreprise</label>
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="Votre entreprise" />
                 </div>
                 <div className="space-y-2">
-                  <Label>SIRET</Label>
-                  <Input placeholder="123 456 789 00001" />
+                  <label className={PrimeAdapter.labelClass()}>SIRET</label>
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="123 456 789 00001" />
                 </div>
                 <div className="space-y-2">
-                  <Label>TVA Intracommunautaire</Label>
-                  <Input placeholder="FR 12 345678900" />
+                  <label className={PrimeAdapter.labelClass()}>TVA Intracommunautaire</label>
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="FR 12 345678900" />
                 </div>
                 <div className="space-y-2">
-                  <Label>Devise par défaut</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez une devise" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="eur">EUR (€)</SelectItem>
-                      <SelectItem value="usd">USD ($)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <label className={PrimeAdapter.labelClass()}>Devise par défaut</label>
+                  <Dropdown 
+                    className={PrimeAdapter.selectClass()} 
+                    options={[
+                      { label: 'EUR (€)', value: 'eur' },
+                      { label: 'USD ($)', value: 'usd' }
+                    ]} 
+                    placeholder="Sélectionnez une devise" 
+                  />
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Numérotation des factures</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <Card className={PrimeAdapter.cardClass()}>
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                Numérotation des factures
+              </h3>
+            </div>
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Préfixe</Label>
-                  <Input placeholder="FAC-" />
+                  <label className={PrimeAdapter.labelClass()}>Préfixe</label>
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="FAC-" />
                 </div>
                 <div className="space-y-2">
-                  <Label>Numéro suivant</Label>
-                  <Input placeholder="2024001" />
+                  <label className={PrimeAdapter.labelClass()}>Numéro suivant</label>
+                  <InputText className={PrimeAdapter.inputClass()} placeholder="2024001" />
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           <div className="flex justify-end">
-            <Button>
-              Enregistrer les modifications
-            </Button>
+            <Button className={PrimeAdapter.buttonClass()} label="Enregistrer les modifications" />
           </div>
         </div>
       </div>

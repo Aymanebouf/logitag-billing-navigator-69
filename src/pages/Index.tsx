@@ -1,6 +1,6 @@
 
-import { Card } from "primereact/card";
 import { Chart } from "primereact/chart";
+import { Card } from "primereact/card";
 import { Layout } from "@/components/Layout";
 import { FileText, Truck, Users } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, value, icon, description }: StatCardProps) => (
-  <div className={PrimeAdapter.cardClass("p-6 bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm hover:shadow-md transition-shadow")}>
+  <Card className={PrimeAdapter.cardClass("p-6 bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm hover:shadow-md transition-shadow")}>
     <div className="flex items-center gap-4">
       <div className="p-3 rounded-full bg-primary/10 text-primary">
         {icon}
@@ -35,7 +35,7 @@ const StatCard = ({ title, value, icon, description }: StatCardProps) => (
         <p className="text-sm text-muted-foreground mt-1">{description}</p>
       </div>
     </div>
-  </div>
+  </Card>
 );
 
 const Index = () => {
@@ -138,12 +138,12 @@ const Index = () => {
         />
       </div>
 
-      <div className={PrimeAdapter.cardClass("p-6")}>
+      <Card className={PrimeAdapter.cardClass("p-6")}>
         <h2 className="text-lg font-semibold mb-6">Activité mensuelle</h2>
         <div className="h-[400px] w-full">
           <Chart type="bar" data={chartData} options={chartOptions} style={{ width: '100%', height: '100%' }} />
         </div>
-      </div>
+      </Card>
     </Layout>
   );
 };

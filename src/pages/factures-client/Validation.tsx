@@ -1,13 +1,9 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
 import { CheckCircle, XCircle } from "lucide-react";
+import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Validation = () => {
   return (
@@ -24,22 +20,16 @@ const Validation = () => {
 
         <div className="grid gap-6">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
+            <Card key={i} className={PrimeAdapter.cardClass("hover:shadow-md transition-shadow")}>
+              <div className="p-6">
                 <div className="flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-semibold">Facture #{i}</h3>
                     <p className="text-sm text-muted-foreground">Client {String.fromCharCode(64 + i)}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <XCircle className="w-4 h-4 mr-1" />
-                      Rejeter
-                    </Button>
-                    <Button variant="default" size="sm">
-                      <CheckCircle className="w-4 h-4 mr-1" />
-                      Valider
-                    </Button>
+                    <Button className={PrimeAdapter.buttonClass("outline", "sm")} label="Rejeter" icon={<XCircle className="w-4 h-4 mr-1" />} />
+                    <Button className={PrimeAdapter.buttonClass("default", "sm")} label="Valider" icon={<CheckCircle className="w-4 h-4 mr-1" />} />
                   </div>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
@@ -56,7 +46,7 @@ const Validation = () => {
                     <p className="font-medium">31/03/2024</p>
                   </div>
                 </div>
-              </CardContent>
+              </div>
             </Card>
           ))}
         </div>

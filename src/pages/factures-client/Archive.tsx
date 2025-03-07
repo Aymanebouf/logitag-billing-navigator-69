@@ -1,19 +1,9 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Archive = () => {
   return (
@@ -28,49 +18,49 @@ const Archive = () => {
           </p>
         </header>
 
-        <Card className="bg-gradient-to-br from-white to-gray-50">
-          <CardHeader>
-            <CardTitle>Recherche dans les archives</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <Card className={PrimeAdapter.cardClass("bg-gradient-to-br from-white to-gray-50")}>
+          <div className="flex flex-col space-y-1.5 p-6 border-b">
+            <h3 className="text-2xl font-semibold leading-none tracking-tight">
+              Recherche dans les archives
+            </h3>
+          </div>
+          <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Année</label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez une année" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2024">2024</SelectItem>
-                    <SelectItem value="2023">2023</SelectItem>
-                    <SelectItem value="2022">2022</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Dropdown
+                  className={PrimeAdapter.selectClass()}
+                  options={[
+                    { label: '2024', value: '2024' },
+                    { label: '2023', value: '2023' },
+                    { label: '2022', value: '2022' }
+                  ]}
+                  placeholder="Sélectionnez une année"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Client</label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Tous les clients" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="client1">Client A</SelectItem>
-                    <SelectItem value="client2">Client B</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Dropdown
+                  className={PrimeAdapter.selectClass()}
+                  options={[
+                    { label: 'Client A', value: 'client1' },
+                    { label: 'Client B', value: 'client2' }
+                  ]}
+                  placeholder="Tous les clients"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Numéro de facture</label>
-                <Input placeholder="Ex: FAC-2024-001" />
+                <InputText className={PrimeAdapter.inputClass()} placeholder="Ex: FAC-2024-001" />
               </div>
             </div>
-          </CardContent>
+          </div>
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="hover:shadow-md transition-shadow">
-              <CardContent className="pt-6">
+            <Card key={i} className={PrimeAdapter.cardClass("hover:shadow-md transition-shadow")}>
+              <div className="pt-6 p-4">
                 <div className="space-y-2">
                   <div className="flex justify-between items-start">
                     <div>
@@ -86,7 +76,7 @@ const Archive = () => {
                     <p className="text-2xl font-bold">{1500 * i} €</p>
                   </div>
                 </div>
-              </CardContent>
+              </div>
             </Card>
           ))}
         </div>

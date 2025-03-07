@@ -44,5 +44,33 @@ export const PrimeAdapter = {
       "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
       className
     );
+  },
+  
+  tableClass: (className?: string) => {
+    return classNames(
+      "w-full text-sm",
+      className
+    );
+  },
+  
+  selectClass: (className?: string) => {
+    return classNames(
+      "flex h-10 w-full items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    );
+  },
+  
+  dialogClass: (className?: string) => {
+    return classNames(
+      "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg",
+      className
+    );
+  },
+  
+  labelClass: (className?: string) => {
+    return classNames(
+      "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      className
+    );
   }
 };
