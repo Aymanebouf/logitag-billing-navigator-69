@@ -1,6 +1,5 @@
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "primereact/button";
 import {
   LayoutDashboard,
   FileText,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { classNames } from "primereact/utils";
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -43,17 +43,16 @@ const NavItem = ({
   onToggleSubmenu 
 }: NavItemProps) => {
   const navigate = useNavigate();
+  const buttonClasses = classNames(
+    "p-button-text w-full justify-start gap-2 transition-all",
+    isActive && "bg-accent text-accent-foreground",
+    hasSubmenu && isSubmenuOpen && "p-button-highlighted"
+  );
 
   return (
     <div>
       <Button
-        variant="ghost"
-        className={cn(
-          "w-full justify-start gap-2 transition-all",
-          isActive && "bg-accent text-accent-foreground",
-          hasSubmenu && "after:content-['>'] after:ml-auto",
-          isSubmenuOpen && "after:rotate-90"
-        )}
+        className={buttonClasses}
         onClick={() => {
           if (hasSubmenu && onToggleSubmenu) {
             onToggleSubmenu();
@@ -63,18 +62,15 @@ const NavItem = ({
         }}
       >
         {icon}
-        {label}
+        <span className="mr-auto">{label}</span>
+        {hasSubmenu && <span className="transform transition-transform">{isSubmenuOpen ? "▼" : "▶"}</span>}
       </Button>
       {isSubmenuOpen && subItems.length > 0 && (
         <div className="ml-4 mt-1 space-y-1">
           {subItems.map((item) => (
             <Button
               key={item.path}
-              variant="ghost"
-              className={cn(
-                "w-full justify-start gap-2 pl-6",
-                location.pathname === item.path && "bg-accent/50"
-              )}
+              className="p-button-text w-full justify-start gap-2 pl-6"
               onClick={() => navigate(item.path)}
             >
               {item.icon}

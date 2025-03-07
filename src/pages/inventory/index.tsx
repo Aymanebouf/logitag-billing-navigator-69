@@ -1,13 +1,8 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
 import { Package, BarChart2, AlertTriangle } from "lucide-react";
 
 const Inventory = () => {
@@ -25,7 +20,7 @@ const Inventory = () => {
 
         <div className="grid gap-6 md:grid-cols-3 mb-6">
           <Card className="bg-gradient-to-br from-white to-gray-50">
-            <CardContent className="pt-6">
+            <div className="p-4">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-full bg-blue-100 text-blue-600">
                   <Package className="w-6 h-6" />
@@ -35,11 +30,11 @@ const Inventory = () => {
                   <p className="text-2xl font-bold">1,234</p>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           <Card className="bg-gradient-to-br from-white to-gray-50">
-            <CardContent className="pt-6">
+            <div className="p-4">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-full bg-green-100 text-green-600">
                   <BarChart2 className="w-6 h-6" />
@@ -49,11 +44,11 @@ const Inventory = () => {
                   <p className="text-2xl font-bold">45,678 €</p>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           <Card className="bg-gradient-to-br from-white to-gray-50">
-            <CardContent className="pt-6">
+            <div className="p-4">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-full bg-yellow-100 text-yellow-600">
                   <AlertTriangle className="w-6 h-6" />
@@ -63,25 +58,25 @@ const Inventory = () => {
                   <p className="text-2xl font-bold">23</p>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </div>
 
         <Card>
-          <CardHeader>
+          <div className="p-4 border-bottom">
             <div className="flex justify-between items-center">
-              <CardTitle>Inventaire</CardTitle>
+              <div className="text-xl font-semibold">Inventaire</div>
               <div className="flex gap-4">
-                <Input className="w-64" placeholder="Rechercher un article..." />
-                <Button>Nouvel Article</Button>
+                <InputText className="w-64" placeholder="Rechercher un article..." />
+                <Button label="Nouvel Article" />
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Card key={i} className="hover:shadow-md transition-shadow">
-                  <CardContent className="pt-6">
+                  <div className="p-4">
                     <div className="flex justify-between items-start">
                       <div>
                         <h3 className="font-medium">Article {i}</h3>
@@ -107,11 +102,11 @@ const Inventory = () => {
                         <span className="font-medium">{i * 10}.00 €</span>
                       </div>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
-          </CardContent>
+          </div>
         </Card>
       </div>
     </Layout>

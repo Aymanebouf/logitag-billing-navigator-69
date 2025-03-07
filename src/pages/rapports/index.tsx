@@ -1,13 +1,9 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "primereact/card";
 import { BarChart, AreaChart } from "lucide-react";
-import { Line, LineChart, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { Chart } from "primereact/chart";
+import { useEffect, useState } from "react";
 
 const data = [
   { name: 'Jan', total: 1200 },
@@ -19,6 +15,65 @@ const data = [
 ];
 
 const Rapports = () => {
+  const [chartData, setChartData] = useState({});
+  const [chartOptions, setChartOptions] = useState({});
+
+  useEffect(() => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    
+    const chartData = {
+      labels: data.map(d => d.name),
+      datasets: [
+        {
+          label: 'Chiffre d\'affaires',
+          data: data.map(d => d.total),
+          borderColor: '#9b87f5',
+          backgroundColor: 'rgba(155, 135, 245, 0.2)',
+          tension: 0.4
+        }
+      ]
+    };
+    
+    const options = {
+      maintainAspectRatio: false,
+      aspectRatio: 1.5,
+      plugins: {
+        legend: {
+          labels: {
+            font: {
+              size: 14
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            font: {
+              size: 12
+            }
+          },
+          grid: {
+            color: documentStyle.getPropertyValue('--surface-border')
+          }
+        },
+        y: {
+          ticks: {
+            font: {
+              size: 12
+            }
+          },
+          grid: {
+            color: documentStyle.getPropertyValue('--surface-border')
+          }
+        }
+      }
+    };
+
+    setChartData(chartData);
+    setChartOptions(options);
+  }, []);
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -29,73 +84,45 @@ const Rapports = () => {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-primary">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 p-4">
+              <div className="text-sm font-medium text-primary">
                 Total Factures
-              </CardTitle>
+              </div>
               <BarChart className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div className="p-4 pt-0">
               <div className="text-2xl font-bold text-primary">150</div>
               <p className="text-xs text-primary/70">
                 +20.1% par rapport au mois dernier
               </p>
-            </CardContent>
+            </div>
           </Card>
 
           <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-secondary">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 p-4">
+              <div className="text-sm font-medium text-secondary">
                 Chiffre d'affaires
-              </CardTitle>
+              </div>
               <AreaChart className="h-4 w-4 text-secondary" />
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div className="p-4 pt-0">
               <div className="text-2xl font-bold text-secondary">45,231.89 €</div>
               <p className="text-xs text-secondary/70">
                 +15% par rapport au mois dernier
               </p>
-            </CardContent>
+            </div>
           </Card>
         </div>
 
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Vue Analytique</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <Card>
+          <div className="p-4 border-bottom">
+            <div className="text-xl font-semibold">Vue Analytique</div>
+          </div>
+          <div className="p-4">
             <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis 
-                    dataKey="name" 
-                    stroke="#888888"
-                    tick={{ fill: '#888888' }}
-                  />
-                  <YAxis 
-                    stroke="#888888"
-                    tick={{ fill: '#888888' }}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      background: 'white',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px'
-                    }}
-                  />
-                  <Line 
-                    type="monotone"
-                    dataKey="total"
-                    stroke="#9b87f5"
-                    strokeWidth={2}
-                    dot={{ fill: '#9b87f5', strokeWidth: 2 }}
-                    activeDot={{ r: 6, fill: '#9b87f5' }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <Chart type="line" data={chartData} options={chartOptions} />
             </div>
-          </CardContent>
+          </div>
         </Card>
       </div>
     </Layout>

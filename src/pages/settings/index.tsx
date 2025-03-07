@@ -1,21 +1,9 @@
 
 import { Layout } from "@/components/Layout";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
 
 const Settings = () => {
   return (
@@ -32,70 +20,69 @@ const Settings = () => {
 
         <div className="grid gap-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Préférences Générales</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                Préférences Générales
+              </h3>
+            </div>
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Langue</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez une langue" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="fr">Français</SelectItem>
-                      <SelectItem value="en">English</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <label className="text-sm font-medium">Langue</label>
+                  <Dropdown
+                    options={[
+                      { label: 'Français', value: 'fr' },
+                      { label: 'English', value: 'en' }
+                    ]}
+                    placeholder="Sélectionnez une langue"
+                    className="w-full"
+                  />
                 </div>
                 <div className="space-y-2">
-                  <Label>Fuseau horaire</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez un fuseau horaire" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="europe-paris">Europe/Paris (UTC+1)</SelectItem>
-                      <SelectItem value="europe-london">Europe/London (UTC)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <label className="text-sm font-medium">Fuseau horaire</label>
+                  <Dropdown
+                    options={[
+                      { label: 'Europe/Paris (UTC+1)', value: 'europe-paris' },
+                      { label: 'Europe/London (UTC)', value: 'europe-london' }
+                    ]}
+                    placeholder="Sélectionnez un fuseau horaire"
+                    className="w-full"
+                  />
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                Notifications
+              </h3>
+            </div>
+            <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Email</Label>
-                  <Input type="email" placeholder="exemple@domaine.com" />
+                  <label className="text-sm font-medium">Email</label>
+                  <InputText type="email" placeholder="exemple@domaine.com" className="w-full" />
                 </div>
                 <div className="space-y-2">
-                  <Label>Fréquence des notifications</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez une fréquence" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="immediate">Immédiate</SelectItem>
-                      <SelectItem value="daily">Quotidienne</SelectItem>
-                      <SelectItem value="weekly">Hebdomadaire</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <label className="text-sm font-medium">Fréquence des notifications</label>
+                  <Dropdown
+                    options={[
+                      { label: 'Immédiate', value: 'immediate' },
+                      { label: 'Quotidienne', value: 'daily' },
+                      { label: 'Hebdomadaire', value: 'weekly' }
+                    ]}
+                    placeholder="Sélectionnez une fréquence"
+                    className="w-full"
+                  />
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           <div className="flex justify-end">
-            <Button>
-              Enregistrer les modifications
-            </Button>
+            <Button label="Enregistrer les modifications" />
           </div>
         </div>
       </div>

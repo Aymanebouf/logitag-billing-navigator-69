@@ -3,7 +3,6 @@ import { Layout } from "@/components/Layout";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { PrimeAdapter } from "@/components/PrimeAdapter";
 
 const Archive = () => {
   return (
@@ -18,7 +17,7 @@ const Archive = () => {
           </p>
         </header>
 
-        <Card className={PrimeAdapter.cardClass("bg-gradient-to-br from-white to-gray-50")}>
+        <Card className="bg-gradient-to-br from-white to-gray-50">
           <div className="flex flex-col space-y-1.5 p-6 border-b">
             <h3 className="text-2xl font-semibold leading-none tracking-tight">
               Recherche dans les archives
@@ -29,7 +28,7 @@ const Archive = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Année</label>
                 <Dropdown
-                  className={PrimeAdapter.selectClass()}
+                  className="w-full"
                   options={[
                     { label: '2024', value: '2024' },
                     { label: '2023', value: '2023' },
@@ -41,7 +40,7 @@ const Archive = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Client</label>
                 <Dropdown
-                  className={PrimeAdapter.selectClass()}
+                  className="w-full"
                   options={[
                     { label: 'Client A', value: 'client1' },
                     { label: 'Client B', value: 'client2' }
@@ -51,7 +50,7 @@ const Archive = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Numéro de facture</label>
-                <InputText className={PrimeAdapter.inputClass()} placeholder="Ex: FAC-2024-001" />
+                <InputText className="w-full" placeholder="Ex: FAC-2024-001" />
               </div>
             </div>
           </div>
@@ -59,7 +58,7 @@ const Archive = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className={PrimeAdapter.cardClass("hover:shadow-md transition-shadow")}>
+            <Card key={i} className="hover:shadow-md transition-shadow">
               <div className="pt-6 p-4">
                 <div className="space-y-2">
                   <div className="flex justify-between items-start">
